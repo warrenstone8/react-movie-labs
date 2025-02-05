@@ -53,3 +53,4 @@ export default function MovieCard(props) {
     </Card>
   );
 }
+
