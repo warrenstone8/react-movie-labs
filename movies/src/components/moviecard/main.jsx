@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import HomePage from "./pages/homePage";
+import HomePage from "../../pages/homePage";
 
 const sample = {
   adult: false,
