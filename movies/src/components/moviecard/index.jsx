@@ -68,12 +68,11 @@ export default function MovieCard(props) {
           <FavoriteIcon color="primary" fontSize="large" />
         </IconButton>
         <Button variant="outlined" size="medium" color="primary">
-          <Link to={`/movies/${movie.id}`}>
-            <Button variant="outlined" size="medium" color="primary">
-              More Info ...
-            </Button>
-          </Link>
-        </Button>
+  <Link to={`/movies/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+    More Info ...
+  </Link>
+</Button>
+
       </CardActions>
     </Card>
   );
