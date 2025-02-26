@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+import { useQuery } from '@tanstack/react-query';
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -11,7 +12,7 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import img from "../../images/pexels-dziana-hasanbekava-5480827.jpg";
 import { getGenres } from "../../api/tmdb-api";
-
+import Spinner from '../spinner';
 
 const formControl = {
   margin: 1,
@@ -20,21 +21,34 @@ const formControl = {
 };
 
 export default function FilterMoviesCard(props) {
-  const [genres, setGenres] = useState([{ id: "0", name: "All" }]);
+  
+  const { data, error, isPending, isError } = useQuery({
+    queryKey: ['genres'],
+    queryFn: getGenres,
+  });
 
-  useEffect(() => {
-    getGenres().then((allGenres) => {
-      setGenres([genres[0], ...allGenres]);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  
+  if (isPending) {
+    return <Spinner />;
+  }
 
+  // If there was an error fetching genres, show an error message
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
+
+  // If data is available, process it
+  const genres = data.genres;
+
+  // Ensure "All" is the first genre in the list
+  if (genres[0].name !== "All") {
+    genres.unshift({ id: "0", name: "All" });
+  }
 
   const handleChange = (e, type, value) => {
-    e.preventDefault()
-    props.onUserInput(type, value)   
+    e.preventDefault();
+    props.onUserInput(type, value); // Notify parent component about the filter change
   };
-
 
   const handleTextChange = (e) => {
     handleChange(e, "name", e.target.value);
