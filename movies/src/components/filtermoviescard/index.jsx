@@ -1,70 +1,62 @@
-import React from "react";
+import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import TextField from "@mui/material/TextField";
-import SearchIcon from "@mui/icons-material/Search";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import img from "../../images/pexels-dziana-hasanbekava-5480827.jpg";
-import { getGenres } from "../../api/tmdb-api";
+import { getGenres } from '../../api/tmdb-api';
 import Spinner from '../spinner';
+import Card from '@mui/material/Card';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import TextField from '@mui/material/TextField';
+import SearchIcon from '@mui/icons-material/Search';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import img from '../../images/pexels-dziana-hasanbekava-5480827.jpg';
 
 const formControl = {
   margin: 1,
-  minWidth: "90%",
-  backgroundColor: "rgb(255, 255, 255)",
+  minWidth: '90%',
+  backgroundColor: 'rgb(255, 255, 255)',
 };
 
 export default function FilterMoviesCard(props) {
-  
+  // Use the query to fetch genres
   const { data, error, isPending, isError } = useQuery({
     queryKey: ['genres'],
     queryFn: getGenres,
   });
 
-  
   if (isPending) {
     return <Spinner />;
   }
 
-  // If there was an error fetching genres, show an error message
   if (isError) {
     return <h1>{error.message}</h1>;
   }
 
-  // If data is available, process it
-  const genres = data.genres;
+  let genres = data?.genres || []; // Safely get genres, default to an empty array if undefined
 
-  // Ensure "All" is the first genre in the list
-  if (genres[0].name !== "All") {
-    genres.unshift({ id: "0", name: "All" });
+  // Add 'All' genre at the beginning if it's not there
+  if (genres.length > 0 && genres[0].name !== 'All') {
+    genres.unshift({ id: '0', name: 'All' });
   }
 
   const handleChange = (e, type, value) => {
     e.preventDefault();
-    props.onUserInput(type, value); // Notify parent component about the filter change
+    props.onUserInput(type, value);
   };
 
   const handleTextChange = (e) => {
-    handleChange(e, "name", e.target.value);
+    handleChange(e, 'name', e.target.value);
   };
 
   const handleGenreChange = (e) => {
-    handleChange(e, "genre", e.target.value);
+    handleChange(e, 'genre', e.target.value);
   };
 
   return (
-    <Card
-      sx={{
-        backgroundColor: "rgb(204, 204, 0)",
-      }}
-      variant="outlined"
-    >
+    <Card sx={{ backgroundColor: 'rgb(204, 204, 0)' }} variant="outlined">
       <CardContent>
         <Typography variant="h5" component="h1">
           <SearchIcon fontSize="large" />
