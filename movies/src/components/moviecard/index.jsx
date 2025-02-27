@@ -1,3 +1,6 @@
+import React, { useContext } from "react";
+import { MoviesContext } from "../../contexts/moviesContext";
+import { Link } from "react-router";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -11,20 +14,22 @@ import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid2";
 import img from "../../images/film-poster-placeholder.png";
-import { Link } from "react-router";
-import React, { useContext } from "react";
-import { MoviesContext } from "../../contexts/moviesContext";
 
-// Update the MovieCard component to remove the redundant heart icon
-export default function MovieCard({ movie, action }) { // Added action prop here
+// Import the FavoriteIcon only if it's necessary (e.g., inside RemoveFromFavorites)
+import FavoriteIcon from "@mui/icons-material/Favorite"; // Import if you are still using this in your RemoveFromFavorites or elsewhere
+
+// Your MovieCard component definition
+export default function MovieCard({ movie, action }) { 
   const { favorites, addToFavorites } = useContext(MoviesContext);
 
+  // Check if the movie is in favorites to display the heart icon
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
   } else {
     movie.favorite = false;
   }
 
+  // Function to handle adding a movie to favorites
   const handleAddToFavorite = (e) => {
     e.preventDefault();
     addToFavorites(movie);
@@ -71,10 +76,10 @@ export default function MovieCard({ movie, action }) { // Added action prop here
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        {/* Render the action prop here, passing the movie object */}
-        {action && action(movie)}  {/* Action is invoked here with the movie */}
-        
-        {/* Remove the favorite icon here as it's now handled by RemoveFromFavorites */}
+        {/* Render the action prop here */}
+        {action && action(movie)} 
+
+        {/* Only render this icon if necessary, like in RemoveFromFavorites */}
         <Button variant="outlined" size="medium" color="primary">
           <Link to={`/movies/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             More Info ...
@@ -84,3 +89,4 @@ export default function MovieCard({ movie, action }) { // Added action prop here
     </Card>
   );
 }
+
