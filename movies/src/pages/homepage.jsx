@@ -3,35 +3,46 @@ import { getMovies } from "../api/tmdb-api";
 import PageTemplate from '../components/templateMovieListPage';
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner';
+import AddToFavoritesIcon from '../components/cardicons/addtoFavorites';
 
 const HomePage = (props) => {
 
-  const { data, error, isPending, isError  } = useQuery({
+  const { data, error, isPending, isError } = useQuery({
     queryKey: ['discover'],
     queryFn: getMovies,
-  })
-  
+  });
+
   if (isPending) {
-    return <Spinner />
+    return <Spinner />;
   }
 
   if (isError) {
-    return <h1>{error.message}</h1>
-  }  
-  
+    return <h1>{error.message}</h1>;
+  }
+
   const movies = data.results;
 
-  // Redundant, but necessary to avoid app crashing.
-  const favorites = movies.filter(m => m.favorite)
-  localStorage.setItem('favorites', JSON.stringify(favorites))
-  const addToFavorites = (movieId) => true 
+  // Manage favorites - you can store favorites in localStorage if needed
+  const handleAddToFavorites = (movie) => {
+    let favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+
+    // Check if the movie is already in the favorites
+    const isAlreadyFavorite = favorites.some(fav => fav.id === movie.id);
+    if (!isAlreadyFavorite) {
+      favorites.push(movie);
+      localStorage.setItem('favorites', JSON.stringify(favorites));
+    }
+  };
 
   return (
     <PageTemplate
-      title='Discover Movies'
+      title="Discover Movies"
       movies={movies}
-      selectFavorite={addToFavorites}
+      action={(movie) => (
+        <AddToFavoritesIcon movie={movie} onClick={() => handleAddToFavorites(movie)} />
+      )}
     />
   );
 };
+
 export default HomePage;

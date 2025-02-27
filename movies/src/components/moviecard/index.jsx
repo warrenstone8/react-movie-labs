@@ -1,4 +1,3 @@
-
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
@@ -6,7 +5,6 @@ import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import FavoriteIcon from "@mui/icons-material/Favorite";
 import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
@@ -14,26 +12,23 @@ import Avatar from "@mui/material/Avatar";
 import Grid from "@mui/material/Grid2";
 import img from "../../images/film-poster-placeholder.png";
 import { Link } from "react-router";
-import React, { useContext  } from "react";
+import React, { useContext } from "react";
 import { MoviesContext } from "../../contexts/moviesContext";
 
-
-export default function MovieCard(props) {
-  const movie = props.movie;
-  
+// Update the MovieCard component to remove the redundant heart icon
+export default function MovieCard({ movie, action }) { // Added action prop here
   const { favorites, addToFavorites } = useContext(MoviesContext);
 
   if (favorites.find((id) => id === movie.id)) {
     movie.favorite = true;
   } else {
-    movie.favorite = false
+    movie.favorite = false;
   }
 
   const handleAddToFavorite = (e) => {
     e.preventDefault();
     addToFavorites(movie);
   };
-
 
   return (
     <Card>
@@ -47,7 +42,7 @@ export default function MovieCard(props) {
         }
         title={
           <Typography variant="h5" component="p">
-            {movie.title}{" "}
+            {movie.title}
           </Typography>
         }
       />
@@ -70,23 +65,22 @@ export default function MovieCard(props) {
           <Grid size={{ xs: 6 }}>
             <Typography variant="h6" component="p">
               <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
+              {"  "} {movie.vote_average}
             </Typography>
           </Grid>
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
-          <FavoriteIcon color="primary" fontSize="large" />
-        </IconButton>
+        {/* Render the action prop here, passing the movie object */}
+        {action && action(movie)}  {/* Action is invoked here with the movie */}
+        
+        {/* Remove the favorite icon here as it's now handled by RemoveFromFavorites */}
         <Button variant="outlined" size="medium" color="primary">
-  <Link to={`/movies/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-    More Info ...
-  </Link>
-</Button>
-
+          <Link to={`/movies/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            More Info ...
+          </Link>
+        </Button>
       </CardActions>
     </Card>
   );
 }
-
