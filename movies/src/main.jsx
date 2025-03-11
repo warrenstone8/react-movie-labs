@@ -12,6 +12,11 @@ import MoviesContextProvider from "./contexts/moviesContext";
 import AddMovieReviewPage from './pages/addMovieReviewPage';
 import UpcomingMoviesPage from "./pages/upcomingmovies";
 import PopularMoviesPage from "./pages/PopularMoviespage";
+import CastAndCrewPage from "./pages/CastAndCrewPage"; 
+
+
+
+
 
 
 
@@ -30,19 +35,18 @@ const App = () => {
       <BrowserRouter>
         <SiteHeader />
         <MoviesContextProvider>
-          <Routes>
-            <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
-            <Route path="/reviews/:id" element={ <MovieReviewPage /> } />
-            <Route path="/movies/:id" element={<MoviePage />} />
-            <Route path="/" element={<HomePage />} />
-            <Route path="*" element={ <Navigate to="/" /> } />
-            <Route path="/reviews/form" element={ <AddMovieReviewPage /> } />
-            <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
-            <Route path="/movies/popular" element={<PopularMoviesPage />} />
-            
-            
+        <Routes>
+  <Route path="/movies/favorites" element={<FavoriteMoviesPage />} />
+  <Route path="/reviews/:id" element={<MovieReviewPage />} />
+  <Route path="/movies/:id" element={<MoviePage />} />
+  <Route path="/movies/:id/cast" element={<CastAndCrewPage />} /> 
+  <Route path="/" element={<HomePage />} />
+  <Route path="*" element={<Navigate to="/" />} />
+  <Route path="/reviews/form" element={<AddMovieReviewPage />} />
+  <Route path="/movies/upcoming" element={<UpcomingMoviesPage />} />
+  <Route path="/movies/popular" element={<PopularMoviesPage />} />
+</Routes>
 
-          </Routes>
         </MoviesContextProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />

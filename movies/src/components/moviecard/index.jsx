@@ -29,11 +29,11 @@ export default function MovieCard({ movie, action }) {
     movie.favorite = false;
   }
 
-  // Function to handle adding a movie to favorites
-  const handleAddToFavorite = (e) => {
-    e.preventDefault();
-    addToFavorites(movie);
-  };
+  // Inside your MovieCard component
+const handleAddToFavorite = (e) => {
+  e.preventDefault();
+  addToFavorites(movie.id); // Changed from passing the whole movie object
+};
 
   return (
     <Card>
@@ -79,14 +79,24 @@ export default function MovieCard({ movie, action }) {
         {/* Render the action prop here */}
         {action && action(movie)} 
 
-        {/* Only render this icon if necessary, like in RemoveFromFavorites */}
+       
+    
+
+
+        {/* More Info Button */}
         <Button variant="outlined" size="medium" color="primary">
           <Link to={`/movies/${movie.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
             More Info ...
           </Link>
         </Button>
+
+        {/* 🔹 New Button for Cast & Crew */}
+        <Button variant="outlined" size="medium" color="secondary">
+          <Link to={`/movies/${movie.id}/cast`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            View Cast & Crew
+          </Link>
+        </Button>
       </CardActions>
     </Card>
   );
-}
-
+};
