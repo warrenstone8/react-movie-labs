@@ -35,9 +35,9 @@ export default function FilterMoviesCard(props) {
     return <h1>{error.message}</h1>;
   }
 
-  let genres = data?.genres || []; // Safely get genres, default to an empty array if undefined
+  let genres = data?.genres || []; 
 
-  // Add 'All' genre at the beginning if it's not there
+  
   if (genres.length > 0 && genres[0].name !== 'All') {
     genres.unshift({ id: '0', name: 'All' });
   }

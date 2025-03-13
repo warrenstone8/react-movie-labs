@@ -12,14 +12,14 @@ export const getMovies = () => {
       return response.json();
     })
     .catch((error) => {
-      // Throwing the error to be handled by the calling function
+      
       throw error;
     });
 };
 
 
 export const getMovie = (args) => {
-  //console.log(args)
+ 
   const [, idPart] = args.queryKey;
   const { id } = idPart;
   return fetch(
@@ -121,8 +121,7 @@ export const getPopularMovies = () => {
 
 
 
-  
-// Get movie credits
+
 export const getMovieCredits = (movieId) => {
   if (!movieId) {
     throw new Error("Movie ID is required to fetch credits");
@@ -144,3 +143,22 @@ export const getMovieCredits = (movieId) => {
       throw error;
     });
 }
+
+export const getNowPlayingMovies = () => {
+  return fetch(
+    `https://api.themoviedb.org/3/movie/now_playing?api_key=${import.meta.env.VITE_TMDB_KEY}`
+  )
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          throw new Error(error.status_message || "Something went wrong");
+        });
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+

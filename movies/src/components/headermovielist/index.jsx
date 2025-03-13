@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router";
 
 const Header = (props) => {
-  const navigate = useNavigate();  // Moved inside the component
+  const navigate = useNavigate(); 
   const title = props.title;
 
   return (

@@ -13,23 +13,23 @@ import Spinner from "../spinner";
 import { excerpt } from "../../util";
 
 export default function MovieReviews({ movie }) {
-  // Use useQuery to fetch movie reviews
+ 
   const { data, error, isPending, isError } = useQuery({
     queryKey: ['reviews', { id: movie.id }],
     queryFn: getMovieReviews,
   });
 
-  // Handle loading state
+  
   if (isPending) {
     return <Spinner />;
   }
 
-  // Handle error state
+  
   if (isError) {
     return <h1>{error.message}</h1>;
   }
 
-  // If data is available, extract reviews
+  
   const reviews = data?.results || [];
 
   return (

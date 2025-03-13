@@ -76,7 +76,7 @@ const handleAddToFavorite = (e) => {
         </Grid>
       </CardContent>
       <CardActions disableSpacing>
-        {/* Render the action prop here */}
+        {      }
         {action && action(movie)} 
 
        

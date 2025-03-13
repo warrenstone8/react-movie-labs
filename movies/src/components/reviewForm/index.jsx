@@ -83,17 +83,17 @@ const ReviewForm = ({ movie }) => {
     review.movieId = movie.id;
     review.rating = rating;
     
-    // Add the review to the context
+    
     context.addReview(movie, review);
     
-    // Open the Snackbar upon submitting the review
+    
     setOpen(true);
   };
 
   return (
     <Box component="div" sx={styles.root}>
       
-      {/* Snackbar for successful review submission */}
+      {               }
       <Snackbar
         sx={styles.snack}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}

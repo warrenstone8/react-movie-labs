@@ -8,7 +8,7 @@ const AddToFavoritesIcon = ({ movie }) => {
 
   const handleAddToFavorites = (e) => {
     e.preventDefault();
-    addToFavorites(movie.id); // Pass the movie ID, not the whole movie
+    addToFavorites(movie.id); 
   };
 
   return (

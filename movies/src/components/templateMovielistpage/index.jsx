@@ -39,7 +39,7 @@ function MovieListPageTemplate({ movies, title, action }) {
             genreFilter={genreFilter}
           />
         </Grid>
-        {/* Pass the 'action' prop to the MovieList component */}
+        {      }
         <MovieList action={action} movies={displayedMovies} />
       </Grid>
     </Grid>
